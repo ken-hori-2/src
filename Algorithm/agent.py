@@ -44,14 +44,6 @@ class Agent():
 
         print("🍎 🍏 🍋 🍊 🍐")
         return action, self.All, self.Reverse
-        
-        if TRIGAR_REVERSE:
-            print("UP")
-            return (self.actions[0])
-        
-        if TRIGAR:
-            print("DOWN")
-            return (self.actions[1])
 
 
     def back_position(self, BPLIST, w, Arc):
@@ -121,7 +113,7 @@ class Agent():
         self.Reverse = False
         
         try:
-            y_n, action, bp = self.model(state)
+            y_n, action, bp = self.model_exp(state)
             
             print("y/n:{}".format(y_n))
             print("Action : {}".format(action))
@@ -135,7 +127,7 @@ class Agent():
 
 
 
-    def model(self, state):
+    def model_exp(self, state):
 
         next_diretion = [(self.actions[0]), (self.actions[1]), (self.actions[2]), (self.actions[3])]
 
@@ -157,7 +149,7 @@ class Agent():
                     return y_n, action, bp
                 print("y/n:{}".format(y_n))
             if not bp:
-                print("==========\nこれ以上進めない状態\n==========") # どの選択肢も y_n = False
+                print("==========\nこれ以上進めない状態\n or 次のマスは探索済み\n==========") # どの選択肢も y_n = False
                 # lost = True
                 self.trigar = True
                 for dir in next_diretion:
@@ -186,7 +178,7 @@ class Agent():
         next_diretion = [(self.actions[0]), (self.actions[1]), (self.actions[2]), (self.actions[3])]
 
         y_n = False
-        bp = False
+        # bp = False
         self.All = False
 
 

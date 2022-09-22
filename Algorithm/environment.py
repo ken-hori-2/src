@@ -71,15 +71,15 @@ class Environment():
         if self.grid[state.row][state.column] == 0:
             return True
         else:
-            # self.s += 1
             return False
 
     def _move(self, state, action, TRIGAR, All, Reverse):
 
-        if Reverse:
-            self.mark_reverse(state)
-        else:
-            self.mark(state, TRIGAR, All)
+        # 試しにコメントアウト
+        # if Reverse:
+        #     self.mark_reverse(state)
+        # else:
+        #     self.mark(state, TRIGAR) # , All)
 
 
         if not self.can_action_at(state):
@@ -101,24 +101,19 @@ class Environment():
         # Check whether a state is out of the grid.
         if not (0 <= next_state.row < self.row_length):
             next_state = state
-            # self.s += 1
             
         if not (0 <= next_state.column < self.column_length):
             next_state = state
-            # self.s += 1
             
 
         # Check whether the agent bumped a block cell.
         if self.grid[next_state.row][next_state.column] == 9:
             next_state = state
-            # self.s += 1
 
         stress, done = self.stress_func(next_state, TRIGAR) # 上だと沼る
         
         
-        # self.mark(state, TRIGAR) # 0920コメントアウト
-        # self.mark(next_state, TRIGAR)
-        # 0920 追加
+        
         pprint.pprint(self.map)
 
         
@@ -148,7 +143,7 @@ class Environment():
 
         return stress, done
 
-    def mark(self, state, TRIGAR, All): # , Reverse):
+    def mark(self, state, TRIGAR): # , All): # , Reverse):
 
         attribute = self.NODELIST[state.row][state.column]
 
@@ -157,31 +152,26 @@ class Environment():
         # if not Reverse:
         if TRIGAR:
             self.map[state.row][state.column] = 2 # こっちが先でないとノードの場所に戻ってもmapに1を上書きできない
-            
-        
-
+       
         # if Reverse:
         #     self.map[state.row][state.column] = 1
 
-        if All:
-            self.mark_all(state)
-
-        
-        
-        
+        # if All:
+        #     self.mark_all(state)
+  
     def mark_all(self, state): # , All):
 
         # if All:
         self.map[state.row][state.column] = 2
 
-        pprint.pprint(self.map)
+        # pprint.pprint(self.map)
 
     def mark_reverse(self, state): # , All):
 
         # if All:
         self.map[state.row][state.column] = 1
 
-        pprint.pprint(self.map)
+        # pprint.pprint(self.map)
 
     def expected_move(self, state, action, TRIGAR, All):
         
@@ -190,7 +180,7 @@ class Environment():
         test = True
 
         # 0920
-        self.mark(state, TRIGAR, All)
+        self.mark(state, TRIGAR) # , All)
 
         # Execute an action (move).
         if action == Action.UP:
@@ -228,7 +218,7 @@ class Environment():
         test = False
 
         # 0920
-        self.mark(state, TRIGAR, All)
+        self.mark(state, TRIGAR) #, All)
 
 
         # self.map[state.row][state.column] = 2
@@ -273,9 +263,6 @@ class Environment():
         # 0920
         # self.mark(state, TRIGAR, All)
         self.mark_reverse(state) # , REVERSE)
-
-
-        # self.map[state.row][state.column] = 2
 
         # Execute an action (move).
         if action == Action.UP:

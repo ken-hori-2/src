@@ -1,7 +1,7 @@
 
 
 
-class Algorism_exp():
+class Algorithm_exp():
 
     
     def __init__(self, *arg):
@@ -61,8 +61,7 @@ class Algorism_exp():
             self.action, self.bp_end, self.All_explore, self.TRIGAR, self.Reverse = self.agent.policy_exp(self.state, self.TRIGAR)
             print("All explore : {}".format(self.All_explore))
             if self.All_explore:
-                self.env.mark_all(state) # , self.All_explore)
-                # self.next_state, self.stress, self.done = self.env._move(self.state, self.action, self.TRIGAR)
+                self.env.mark_all(state)
                 self.STATE_HISTORY.append(self.state)
                 print("終了します")
                 self.All_explore = False
@@ -70,13 +69,8 @@ class Algorism_exp():
             self.next_state, self.stress, self.done = self.env._move(self.state, self.action, self.TRIGAR, self.All_explore, self.Reverse)
             self.prev_state = self.state # 1つ前のステップを保存 -> 後でストレスの減少に使う
             self.state = self.next_state
-            # if self.All_explore:
-            #     # self.next_state, self.stress, self.done = self.env._move(self.state, self.action, self.TRIGAR)
-            #     self.STATE_HISTORY.append(self.state)
-            #     print("終了します")
-            #     break
 
-            if self.COUNT > 40: # 26: # 18: # 0:
+            if self.COUNT > 40:
                 break
             self.COUNT += 1
 

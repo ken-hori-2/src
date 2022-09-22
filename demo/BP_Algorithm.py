@@ -1,7 +1,7 @@
 
 
 
-class Algorism_bp():
+class Algorithm_bp():
 
     
     def __init__(self, *arg):
