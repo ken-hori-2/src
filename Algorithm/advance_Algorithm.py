@@ -15,7 +15,7 @@ class Algorithm_advance():
         ########## parameter ##########
         self.total_stress = 0
         self.stress = 0
-        self.Stressfull = 4 # 5 # 6
+        self.Stressfull = 8 # 10 # 4
         self.COUNT = 0
         self.done = False
         self.TRIGAR = False
@@ -93,17 +93,29 @@ class Algorithm_advance():
             print(f"Total Stress:{self.total_stress}")
 
 
-            self.action, All_explore, self.Reverse = self.agent.policy_advance(self.state, self.TRIGAR)
+            # self.action, All_explore, self.Reverse = self.agent.policy_advance(self.state, self.TRIGAR)
+            self.action, self.Reverse, self.TRIGAR = self.agent.policy_advance(self.state, self.TRIGAR)
+            if self.TRIGAR:
+                self.env.mark(self.state, self.TRIGAR)
+                self.STATE_HISTORY.append(self.state)
+                print("終了します")
+                self.TRIGAR = False
+                break
+
             # self.next_state, self.stress, self.done = self.env.step(self.action, self.TRIGAR)
-            self.next_state, self.stress, self.done = self.env._move(self.state, self.action, self.TRIGAR, All_explore, self.Reverse)
+            # self.next_state, self.stress, self.done = self.env._move(self.state, self.action, self.TRIGAR, All_explore, self.Reverse)
+            self.next_state, self.stress, self.done = self.env._move(self.state, self.action, self.TRIGAR)
             self.prev_state = self.state # 1つ前のステップを保存 -> 後でストレスの減少に使う
             self.state = self.next_state
             
-            # self.COUNT += 1
-            # print("COUNT : {}".format(self.COUNT))
-            # if self.COUNT > 50:
-            #     break
+            
+            print("COUNT : {}".format(self.COUNT))
+            if self.COUNT > 150:
+                break
+            self.COUNT += 1
+
+        print("🍏 ⚠️ 🍐 Action : {}".format(self.action))
 
         # print("state_history : {}".format(self.STATE_HISTORY))
 
-        return self.total_stress, self.STATE_HISTORY, self.state, self.TRIGAR, self.OBS, self.BPLIST
+        return self.total_stress, self.STATE_HISTORY, self.state, self.TRIGAR, self.OBS, self.BPLIST, self.action
