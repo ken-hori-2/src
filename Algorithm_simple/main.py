@@ -61,7 +61,7 @@ def main():
         STATE_HISTORY = []
         TRIGAR = False
         
-        for i in range(10): # 4 戻るノードの個数以上は回す
+        for i in range(6): # 4 戻るノードの個数以上は回す
             print("===================\n🐬🍏🍋test 0921 : {}\n===================".format(i))
 
             total_stress, STATE_HISTORY, state, TRIGAR, OBS, BPLIST, action = Advance_action.Advance(STATE_HISTORY, state, TRIGAR)
