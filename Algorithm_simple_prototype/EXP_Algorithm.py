@@ -15,7 +15,7 @@ class Algorithm_exp():
         ########## parameter ##########
         self.total_stress = 0
         self.stress = 0
-        self.Stressfull = 8 # 10 # 4
+        self.Stressfull = 4 # 8 # 10 # 4
         self.COUNT = 0
         self.done = False
         self.TRIGAR = False

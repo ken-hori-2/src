@@ -237,11 +237,6 @@ class Agent():
             # next_diretion = self.next_direction_trigar_reverse() # [(self.actions[1]), (self.actions[0]), (self.actions[2]), (self.actions[3])]
             next_diretion = self.next_direction_decision("trigar")
             print("TEST!!!!!")
-
-            # add0926
-            # self.TRIGAR_REVERSE_bp = False
-
-            
             for dir in next_diretion:
                 print("\ndir:{}".format(dir))
                 y_n, action = self.env.expected_move_return(state, dir, self.TRIGAR_bp, self.All)
@@ -278,18 +273,11 @@ class Agent():
 
 
     def back_position(self, BPLIST, w, Arc):
-        try:
-            Arc_INVERSE = [round(1/Arc[x],2) for x in range(len(Arc))]
-        except:
+        # try:
+        Arc_INVERSE = [round(1/Arc[x],2) for x in range(len(Arc))]
+        # except:
         #     # Arc_INVERSE = [round(Arc[x],2) for x in range(len(Arc))]
-            print("ERROR")
-            Arc_INVERSE = []
-            for x in range(len(Arc)):
-                try:
-                    Arc_INVERSE.append(round(1/Arc[x],2))
-                except:
-                    Arc_INVERSE.append(0)
-            
+        #     print("ERROR")
         w = np.round(preprocessing.minmax_scale(w), 3)
         Arc = np.round(preprocessing.minmax_scale(Arc), 3)
         Arc_INVERSE = np.round(preprocessing.minmax_scale(Arc_INVERSE), 3)

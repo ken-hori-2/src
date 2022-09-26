@@ -15,7 +15,7 @@ class Algorithm_advance():
         ########## parameter ##########
         self.total_stress = 0
         self.stress = 0
-        self.Stressfull = 8 # 6->env1 #10 # 6 # 8 # 10 # 4
+        self.Stressfull = 10 # 6 # 8 # 10 # 4
         self.COUNT = 0
         self.done = False
         self.TRIGAR = False
@@ -39,7 +39,7 @@ class Algorithm_advance():
         self.TRIGAR = TRIGAR
 
         # add 0924
-        self.total_stress = 0 # 3 # Stressfull = 10 -3 = 7 # 今はストレス値は共有していないのでいらない
+        # self.total_stress = 0 # 3 # Stressfull = 10 -3 = 7 # 今はストレス値は共有していないのでいらない
         print("TOTAl : {}".format(self.total_stress))
 
         self.OBS = OBS

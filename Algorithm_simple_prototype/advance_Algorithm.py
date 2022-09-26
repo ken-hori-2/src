@@ -15,7 +15,7 @@ class Algorithm_advance():
         ########## parameter ##########
         self.total_stress = 0
         self.stress = 0
-        self.Stressfull = 8 # 10 # 4
+        self.Stressfull = 6 # 8 # 10 # 4
         self.COUNT = 0
         self.done = False
         self.TRIGAR = False
