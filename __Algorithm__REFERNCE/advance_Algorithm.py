@@ -1,4 +1,5 @@
 import numpy as np
+from reference_match_rate import Property
 
 
 class Algorithm_advance():
@@ -11,6 +12,7 @@ class Algorithm_advance():
         self.agent = arg[2] # agent
         self.NODELIST = arg[3] # NODELIST
         self.Observation = arg[4]
+        self.refer = Property() # arg[5]
 
         ########## parameter ##########
         self.total_stress = 0
@@ -33,69 +35,7 @@ class Algorithm_advance():
         self.FIRST = True
 
     
-    def callback(self):
-        
-        Node = self.Pre[:, 1]
-        Arc = self.Pre[:, 0]
-        print(Node)
-        print(len(Node))
-        print(Arc)
-        sum_test = 0
-        Node = Node.tolist()
-        Arc = Arc.tolist()
-        State = 13
-        stress = 0
-
-        num = [int(i) for i in Arc]
-        print(type(num))
-        Arc_sum = sum(num)
-        for x in range (len(self.env)):
-        
-            print("=========== {} step ============".format(x))
-            if self.env[State] in self.Pre:
-
-                stress = 0
-                
-                index = Node.index(self.env[State][0])
-                
-                test = x-sum_test
-                
-                print("<{}> match !".format(self.env[State][0]))
-                print("事前のArc : {}".format(Arc[index]))
-                print("実際のArc : {}".format(test))
-                sum_test += test
-                permission = Arc_sum-x
-                print("----\n今の permission : {} 以内に発見\n----".format(permission))
-
-                standard = []
-                
-                try:
-                    standard.append(round(test/int(Arc[index]), 2))
-                except:
-                    standard.append(0)
-
-                print("standard【基準距離】 : {}".format(standard[0]))
-
-                if standard[0] != 0:
-                    arc_s = round(abs(1.0-standard[0]), 2)
-                else:
-                    arc_s = 0.0
-                print("arc stress【基準ストレス】 : {}".format(arc_s))  #このままだとArcが大きくなるとストレス値も大きくなってしまい、ストレス値の重みが変わってしまうので、基準[1]にする 
-            else:
-                print("no match!")
-                stress += 1
-
-            print("stress : {}".format(stress))
-            print("------------\npermission : {}\n------------".format(permission))
-
-            if stress >= permission:
-                print("Stress Max")
-                break
-
-
-            State -= 1
-
-        print("=========== 終了します ============")
+    
             
 
     def Advance(self, STATE_HISTORY, state, TRIGAR, OBS):
@@ -112,52 +52,16 @@ class Algorithm_advance():
         self.Add_Advance = False
         GOAL = False
 
-        pre = np.array([
-                # [2, "g"],
-                # [3, "C"],
-                # [1, "B"],
-                # [2, "A"],
-                # [0, "s"]
-                [2, "g"],
-                [3, "C"],
-                [2, "B"],
-                [3, "A"],
-                [0, "s"]
-                # [5, "g"],
-                # [6, "C"],
-                # [3, "B"],
-                # [2, "A"],
-                # [0, "s"]
-                ])
-        Node = pre[:, 1]
-        Arc = pre[:, 0]
-        print(Node)
-        print(len(Node))
-        print(Arc)
+
+
+        pre, Node, Arc, Arc_sum, PERMISSION = self.refer.reference() # self.callback()
         sum_test = 0
-        Node = Node.tolist()
-        Arc = Arc.tolist()
-        # State = 13
-        stress = 0
-        num = [int(i) for i in Arc]
-        print(type(num))
-        Arc_sum = sum(num)
-        print(Arc_sum)
         x = 0
         Arc_pre_sum = 0
 
-        PERMISSION = [
-                # [0],
-                # [2],
-                # [5],
-                # [7],
-                # [10]
-                [Arc_sum-int(Arc[3])-int(Arc[2])-int(Arc[1])-int(Arc[0])],
-                [Arc_sum-int(Arc[3])-int(Arc[2])-int(Arc[1])],
-                [Arc_sum-int(Arc[3])-int(Arc[2])],
-                [Arc_sum-int(Arc[3])],
-                [Arc_sum]
-        ]
+        self.stress = 0
+
+       
 
         while not self.done:
         
@@ -177,7 +81,7 @@ class Algorithm_advance():
                 
                         index = Node.index(self.NODELIST[self.state.row][self.state.column])
                         
-                        # test = self.stress-sum_test
+                        
                         test = x-sum_test
                         
                         print("<{}> match !".format(self.NODELIST[self.state.row][self.state.column]))
@@ -189,9 +93,8 @@ class Algorithm_advance():
 
                         print("Arc sum : {}  == x : {}".format(Arc_sum-x, x))
                         print("Arc[index]:{}".format(int(Arc[index])))
-                        # permission = Arc_sum-self.stress
-                        permission = Arc_sum - Arc_pre_sum # int(Arc[index]) # x # stress
-                        print("----\n今の permission : {} 以内に発見\n----".format(permission))
+                        
+                        
                         print("----\n今の permission : {} 以内に発見\n----".format(PERMISSION[index][0]))
 
                         standard = []
@@ -253,8 +156,7 @@ class Algorithm_advance():
                         stress += 1
 
 
-                    # print("stress : {}".format(stress))
-                    print("------------\npermission : {}\n------------".format(permission))
+                    
                     print("PERMISSION : {}".format(PERMISSION[index][0]))
                     x += 1
 

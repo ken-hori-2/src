@@ -5,6 +5,7 @@ from random import random
 
 import random
 import numpy as np
+from reference_match_rate import Property
 
 
 class State():
@@ -48,6 +49,7 @@ class Environment():
         # self.NODELIST = NODELIST
         # self.s = s
         # self.map = map
+        self.refer = Property()
 
         
 
@@ -126,18 +128,8 @@ class Environment():
 
     def stress_func(self, state, TRIGAR):
 
-        pre = np.array([
-                # [2, "g"],
-                # [3, "C"],
-                # [1, "B"],
-                # [2, "A"],
-                # [0, "s"]
-                [2, "g"],
-                [3, "C"],
-                [2, "B"],
-                [3, "A"],
-                [0, "s"]
-        ])
+        
+        pre, Node, Arc, Arc_sum, PERMISSION = self.refer.reference()
        
         done = False
 
@@ -156,9 +148,11 @@ class Environment():
             # if attribute > 0.0:
             if attribute in pre:
                 # Get reward! and the game ends.
+                print("###########")
                 stress = 0 # -1 # 0                              # ここが reward = None の原因 or grid の 1->0 で解決
             else:
                 stress = self.default_stress
+                print("###########")
 
 
         return stress, done

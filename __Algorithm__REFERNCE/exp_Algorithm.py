@@ -1,6 +1,7 @@
 from pprint import pprint
 import numpy as np
 import pprint
+from reference_match_rate import Property
 
 
 class Algorithm_exp():
@@ -13,6 +14,7 @@ class Algorithm_exp():
         self.agent = arg[2] # agent
         self.NODELIST = arg[3] # NODELIST
         self.Observation = arg[4]
+        self.refer = Property() # arg[5]
         
         ########## parameter ##########
         self.total_stress = 0
@@ -33,51 +35,11 @@ class Algorithm_exp():
         self.state = state
         self.TRIGAR = TRIGAR
 
-
-
-        pre = np.array([
-                # [2, "g"],
-                # [3, "C"],
-                # [1, "B"],
-                # [2, "A"],
-                # [0, "s"]
-                [2, "g"],
-                [3, "C"],
-                [2, "B"],
-                [3, "A"],
-                [0, "s"]
-                ])
-
-        Node = pre[:, 1]
-        Arc = pre[:, 0]
-        print(Node)
-        print(len(Node))
-        print(Arc)
-        sum_test = 0
-        Node = Node.tolist()
-        Arc = Arc.tolist()
-        num = [int(i) for i in Arc]
-        print(type(num))
-        Arc_sum = sum(num)
-        print(Arc_sum)
-        x = 0
-        Arc_pre_sum = 0
-        PERMISSION = [
-                # [0],
-                # [2],
-                # [5],
-                # [7],
-                # [10]
-                [Arc_sum-int(Arc[3])-int(Arc[2])-int(Arc[1])-int(Arc[0])],
-                [Arc_sum-int(Arc[3])-int(Arc[2])-int(Arc[1])],
-                [Arc_sum-int(Arc[3])-int(Arc[2])],
-                [Arc_sum-int(Arc[3])],
-                [Arc_sum]
-        ]
-
+        pre, Node, Arc, Arc_sum, PERMISSION = self.refer.reference()
         pprint.pprint(PERMISSION)
 
         # self.map_unexp_area = map_unexp_area
+        self.total_stress = 0
 
         while not self.done:
             print("\n========== 🌟 {}steps ==========".format(self.COUNT+1))

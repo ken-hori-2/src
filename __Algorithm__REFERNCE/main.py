@@ -24,6 +24,8 @@ import pprint
 
 from advance_Algorithm import Algorithm_advance
 
+from reference_match_rate import Property
+
 
 
 
@@ -33,6 +35,9 @@ def main():
     set = Setting()
 
     NODELIST, ARCLIST, Observation, map, grid = set.Infomation()
+
+    # refer = Property()
+    # reference = refer.reference
 
     GOAL_STATE = [0, 2]
 
@@ -50,7 +55,7 @@ def main():
         # Initialize position of agent.
         state = env.reset()
 
-        demo = [state, env, agent, NODELIST, Observation]
+        demo = [state, env, agent, NODELIST, Observation] # , reference]
 
         Advance_action = Algorithm_advance(*demo)
 
