@@ -69,7 +69,13 @@ class Algorithm_bp():
                         
 
                         self.BACK_REVERSE = False
-                    except:
+                    # except:
+                    except Exception as e:
+                        print('=== エラー内容 ===')
+                        print('type:' + str(type(e)))
+                        print('args:' + str(e.args))
+                        print('message:' + e.message)
+                        print('e自身:' + str(e))
                         print("ERROR!")
                         self.STATE_HISTORY.append(self.state)
                         break
@@ -184,13 +190,13 @@ class Algorithm_bp():
                         self.on_the_way = True
 
                         
-                    except:
-                    # except Exception as e:
-                    #     print('=== エラー内容 ===')
-                    #     print('type:' + str(type(e)))
-                    #     print('args:' + str(e.args))
-                    #     print('message:' + e.message)
-                    #     print('e自身:' + str(e))
+                    # except:
+                    except Exception as e:
+                        print('=== エラー内容 ===')
+                        print('type:' + str(type(e)))
+                        print('args:' + str(e.args))
+                        print('message:' + e.message)
+                        print('e自身:' + str(e))
                         print("ERROR!")
                         self.STATE_HISTORY.append(self.state)
 

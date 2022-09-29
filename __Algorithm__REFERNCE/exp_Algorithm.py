@@ -40,6 +40,8 @@ class Algorithm_exp():
 
         # self.map_unexp_area = map_unexp_area
         self.total_stress = 0
+        # 初期
+        index = Node.index("s")
 
         while not self.done:
             print("\n========== 🌟 {}steps ==========".format(self.COUNT+1))

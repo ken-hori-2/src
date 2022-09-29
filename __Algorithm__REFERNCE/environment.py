@@ -70,6 +70,7 @@ class Environment():
         # self.agent_state = State(6, 2)
         # self.agent_state = State(5, 2)
         self.agent_state = State(12, 2)
+        # self.agent_state = State(1, 2)
         # self.agent_state = State(6, 0)
         return self.agent_state
 

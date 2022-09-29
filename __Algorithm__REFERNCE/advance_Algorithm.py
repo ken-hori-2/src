@@ -1,5 +1,7 @@
+from pprint import pprint
 import numpy as np
 from reference_match_rate import Property
+import pprint
 
 
 class Algorithm_advance():
@@ -60,6 +62,9 @@ class Algorithm_advance():
         Arc_pre_sum = 0
 
         self.stress = 0
+        # 初期
+        index = Node.index("s")
+        pprint.pprint(pre)
 
        
 
@@ -76,7 +81,7 @@ class Algorithm_advance():
                     # if self.NODELIST[self.state.row][self.state.column] > 0.0:
                     if self.NODELIST[self.state.row][self.state.column] in pre:
 
-                        stress = 0
+                        # stress = 0
                         self.total_stress = 0
                 
                         index = Node.index(self.NODELIST[self.state.row][self.state.column])
@@ -138,6 +143,7 @@ class Algorithm_advance():
                         
                         print("🪧 NODE : ⭕️")
 
+                        # if not self.NODELIST[self.state.row][self.state.column] == "s":
                         self.Add_Advance = True
                         self.BPLIST.append(self.state)
 
@@ -153,7 +159,7 @@ class Algorithm_advance():
 
                     # else:
                         print("no match!")
-                        stress += 1
+                        # stress += 1
 
 
                     
@@ -201,6 +207,9 @@ class Algorithm_advance():
                 self.STATE_HISTORY.append(self.state)
                 print("終了します")
                 # self.TRIGAR = False
+
+                # add 0929
+                self.BPLIST.append(self.state) # Arcを計算する為に、最初だけ必要
                 break
 
             # self.next_state, self.stress, self.done = self.env.step(self.action, self.TRIGAR)
